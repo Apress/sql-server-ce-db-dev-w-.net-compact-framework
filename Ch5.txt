@@ -1,0 +1,689 @@
+SELECT *FROM INFORMATION_SCHEMA.PROVIDER_TYPES
+
+SqlCeConnection cn =null;//C#
+Private cn as SqlCeConnection ‘VB .NET
+
+
+Private Sub btnConnect_Click(ByVal sender As System.Object,_
+ByVal e As System.EventArgs)Handles btnConnect.Click
+Try
+btnConnect.Enabled =False
+Select Case btnConnect.Text
+Case "Connect"
+cn =New SqlCeConnection(_
+"Data Source=\My Documents \NorthwindDemo.sdf;Password=")
+cn.Open()
+btnConnect.Text ="Disconnect"
+Case "Disconnect"
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+btnConnect.Text ="Connect"
+End Select
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+btnConnect.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnConnect_Click(object sender,System.EventArgs e)
+{
+try
+{
+btnConnect.Enabled =false;
+switch (btnConnect.Text)
+{
+case "Connect":
+cn =new SqlCeConnection(
+"Data Source=\\My Documents \\NorthwindDemo.sdf;Password=");cn.Open();
+btnConnect.Text ="Disconnect";
+break;
+case "Disconnect":
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+btnConnect.Text ="Connect";
+break;
+}
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+btnConnect.Enabled =true;
+}
+}
+
+
+Visual Basic .NET
+Private Sub btnTables_Click(ByVal sender As System.Object,_
+ByVal e As System.EventArgs)Handles btnTables.Click
+Try
+btnTables.Enabled =False
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT TABLE_NAME "&_
+"FROM INFORMATION_SCHEMA.TABLES "&_
+"WHERE TABLE_TYPE ='TABLE'"
+TreeView1.BeginUpdate()
+TreeView1.Nodes.Clear()
+TreeView1.Nodes.Add(New TreeNode("Tables"))
+Dim childNode As TreeNode =TreeView1.Nodes(0)
+Dim childCount As Integer =0
+Dim dr As SqlCeDataReader =cmd.ExecuteReader
+While dr.Read()
+childNode.Nodes.Insert(childCount,New TreeNode(dr(0)))
+childCount +=1
+End While
+dr.Close()
+TreeView1.ExpandAll()
+TreeView1.EndUpdate()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+btnTables.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnTables_Click(object sender,System.EventArgs e)
+{
+try
+{
+btnTables.Enabled =false;
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT TABLE_NAME "+
+"FROM INFORMATION_SCHEMA.TABLES "+
+"WHERE TABLE_TYPE ='TABLE'";
+treeView1.BeginUpdate();
+treeView1.Nodes.Clear();
+treeView1.Nodes.Add(new TreeNode("Tables"));
+TreeNode childNode =treeView1.Nodes [0 ];
+int childCount =0;
+SqlCeDataReader dr =cmd.ExecuteReader();
+while(dr.Read())
+{
+childNode.Nodes.Insert(childCount,new TreeNode(dr [0 ].ToString()));
+childCount++;
+}
+dr.Close();
+treeView1.ExpandAll();
+treeView1.EndUpdate();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{MessageBox.Show(ex.Message);
+}
+finally
+{
+btnTables.Enabled =true;
+}
+}
+
+
+Visual Basic .NET
+Private Sub btnTableConstraints_Click(ByVal sender As System.Object,_
+ByVal e As System.EventArgs)Handles btnTableConstraints.Click
+Try
+btnTableConstraints.Enabled =False
+Dim selectedTable As String =TreeView1.SelectedNode.Text
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT CONSTRAINT_NAME,"&_
+"CONSTRAINT_TYPE "&_
+"FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS "&_
+"WHERE TABLE_NAME ='"&selectedTable &"'"
+TreeView1.BeginUpdate()
+TreeView1.Nodes.Clear()
+TreeView1.Nodes.Add(New TreeNode(selectedTable))
+Dim childNode As TreeNode =TreeView1.Nodes(0)
+Dim childCount As Integer =0
+Dim dr As SqlCeDataReader =cmd.ExecuteReader
+While dr.Read()
+childNode.Nodes.Insert(childCount,New TreeNode(dr(0)&""&dr(1)))
+childCount +=1
+End While
+dr.Close()
+TreeView1.ExpandAll()
+TreeView1.EndUpdate()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+btnTableConstraints.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnTableConstraints_Click(object sender,System.EventArgs e)
+{
+try
+{
+btnTableConstraints.Enabled =false;
+string selectedTable =treeView1.SelectedNode.Text;
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT CONSTRAINT_NAME,"+
+"CONSTRAINT_TYPE "+
+"FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS "+
+"WHERE TABLE_NAME ='"+selectedTable +"'";
+treeView1.BeginUpdate();
+treeView1.Nodes.Clear();
+treeView1.Nodes.Add(new TreeNode(selectedTable));
+TreeNode childNode =treeView1.Nodes [0 ];
+int childCount =0;
+SqlCeDataReader dr =cmd.ExecuteReader();
+while(dr.Read())
+{
+childNode.Nodes.Insert(childCount,new TreeNode(dr [0 ].ToString()+
+"("+dr [1 ].ToString()+")"));
+childCount++;
+}
+dr.Close();
+treeView1.ExpandAll();
+treeView1.EndUpdate();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+btnTableConstraints.Enabled =true;
+}
+}
+
+
+Visual Basic .NET
+Private Sub btnColumns_Click(ByVal sender As System.Object,_
+ByVal e As System.EventArgs)Handles btnColumns.Click
+Try
+btnColumns.Enabled =False
+Dim selectedTable As String =TreeView1.SelectedNode.Text
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT COLUMN_NAME,"&_
+"DATA_TYPE,"&_
+"CHARACTER_MAXIMUM_LENGTH "&_
+"FROM INFORMATION_SCHEMA.COLUMNS "&_
+"WHERE TABLE_NAME ='"&selectedTable &"'"
+TreeView1.BeginUpdate()
+TreeView1.Nodes.Clear()
+TreeView1.Nodes.Add(New TreeNode(selectedTable))
+Dim childNode As TreeNode =TreeView1.Nodes(0)Dim childCount As Integer =0
+Dim dataType As String
+Dim dataLength As String
+Dim dr As SqlCeDataReader =cmd.ExecuteReader
+While dr.Read()
+Select Case dr(1)
+Case 2
+dataType ="smallint"
+Case 3
+dataType ="int"
+Case 4
+dataType ="real"
+Case 5
+dataType ="float"
+Case 6
+dataType ="money"
+Case 11
+dataType ="bit"
+Case 17
+dataType ="tinyint"
+Case 20
+dataType ="bigint"
+Case 72
+dataType ="uniqueidentifier"
+Case 128
+dataType ="binary"
+Case 130
+dataType ="nvarchar"
+Case 131
+dataType ="numeric"
+Case 135
+dataType ="datetime"
+Case Else
+dataType ="unknown"
+End Select
+If Not IsDBNull(dr(2))Then
+dataLength ="("&dr(2)&")"
+Else
+dataLength =""
+End IfchildNode.Nodes.Insert(childCount,New TreeNode(dr(0)&_
+"("&dataType &")"&dataLength))
+childCount +=1
+End While
+dr.Close()
+TreeView1.ExpandAll()
+TreeView1.EndUpdate()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+btnColumns.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnColumns_Click(object sender,System.EventArgs e)
+{
+try
+{
+btnColumns.Enabled =false;
+string selectedTable =treeView1.SelectedNode.Text;
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT COLUMN_NAME,"+
+"DATA_TYPE,"+
+"CHARACTER_MAXIMUM_LENGTH "+
+"FROM INFORMATION_SCHEMA.COLUMNS "+
+"WHERE TABLE_NAME ='"+selectedTable +"'";
+treeView1.BeginUpdate();
+treeView1.Nodes.Clear();
+treeView1.Nodes.Add(new TreeNode(selectedTable));
+TreeNode childNode =treeView1.Nodes [0 ];
+int childCount =0;
+string dataType ="";string dataLength ="";
+SqlCeDataReader dr =cmd.ExecuteReader();
+while(dr.Read())
+{
+switch (dr [1 ].ToString())
+{
+case "2":
+dataType ="smallint";
+break;
+case "3":
+dataType ="int";
+break;
+case "4":
+dataType ="real";
+break;
+case "5":
+dataType ="float";
+break;
+case "6":
+dataType ="money";
+break;
+case "11":
+dataType ="bit";
+break;
+case "17":
+dataType ="tinyint";
+break;
+case "20":
+dataType ="bigint";
+break;
+case "72":
+dataType ="uniqueidentifier";
+break;
+case "128":
+dataType ="binary";
+break;
+case "130":
+dataType ="nvarchar";
+break;
+case "131":
+dataType ="numeric";
+break;case "135":
+dataType ="datetime";
+break;
+default:
+dataType ="unknown";
+break;
+}
+if(!dr.IsDBNull(2))
+{
+dataLength ="("+dr [2 ] ++")";
+}
+else
+{
+dataLength ="";
+}
+childNode.Nodes.Insert(childCount,new TreeNode(dr [0 ].ToString()+
+"("+dataType +")"+dataLength));
+childCount++;
+}
+dr.Close();
+treeView1.ExpandAll();
+treeView1.EndUpdate();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+btnColumns.Enabled =true;
+}
+}
+
+
+
+Visual Basic .NET
+Private Sub btnIndexes_Click(ByVal sender As System.Object,_
+ByVal e As System.EventArgs)Handles btnIndexes.Click
+Try
+btnIndexes.Enabled =False
+Dim selectedTable As String =TreeView1.SelectedNode.Text
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT INDEX_NAME,"&_
+"COLUMN_NAME,"&_
+"""UNIQUE"","&_
+"PRIMARY_KEY "&_
+"FROM INFORMATION_SCHEMA.INDEXES "&_
+"WHERE TABLE_NAME ='"&selectedTable &"'"
+TreeView1.BeginUpdate()
+TreeView1.Nodes.Clear()
+TreeView1.Nodes.Add(New TreeNode(selectedTable))
+Dim childNode As TreeNode =TreeView1.Nodes(0)
+Dim childCount As Integer =0
+Dim indexUnique As String
+Dim indexPrimaryKey As String
+Dim dr As SqlCeDataReader =cmd.ExecuteReader
+While dr.Read()
+If dr(2)="True"Then
+indexUnique ="(UNIQUE)"
+Else
+indexUnique =""
+End If
+If dr(3)="True"Then
+indexPrimaryKey ="(PRIMARY KEY)"
+Else
+indexPrimaryKey =""
+End If
+childNode.Nodes.Insert(childCount,New TreeNode(_
+dr(0)&"("&dr(1)&")"&indexUnique &""&indexPrimaryKey))
+childCount +=1
+End While
+dr.Close()TreeView1.ExpandAll()
+TreeView1.EndUpdate()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+btnIndexes.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnIndexes_Click(object sender,System.EventArgs e)
+{
+try
+{
+btnIndexes.Enabled =false;
+string selectedTable =treeView1.SelectedNode.Text;
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT INDEX_NAME,"+
+"COLUMN_NAME,"+
+"\"UNIQUE \","+
+"PRIMARY_KEY "+
+"FROM INFORMATION_SCHEMA.INDEXES "+
+"WHERE TABLE_NAME ='"+selectedTable +"'";
+treeView1.BeginUpdate();
+treeView1.Nodes.Clear();
+treeView1.Nodes.Add(new TreeNode(selectedTable));
+TreeNode childNode =treeView1.Nodes [0 ];
+int childCount =0;
+string indexUnique ="";
+string indexPrimaryKey ="";
+SqlCeDataReader dr =cmd.ExecuteReader();
+while(dr.Read())
+{
+if(dr [2 ].ToString()=="True")
+{
+indexUnique ="(UNIQUE)";}
+else
+{
+indexUnique ="";
+}
+if(dr [3 ].ToString()=="True")
+{
+indexPrimaryKey ="(PRIMARY KEY)";
+}
+else
+{
+indexPrimaryKey ="";
+}
+childNode.Nodes.Insert(childCount,new TreeNode(dr [0 ].ToString()+
+"("+dr [1 ].ToString()+")"+indexUnique +""+
+indexPrimaryKey));
+childCount++;
+}
+dr.Close();
+treeView1.ExpandAll();
+treeView1.EndUpdate();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+btnIndexes.Enabled =true;
+}
+}
+
+
+
+Visual Basic .NET
+Private Sub btnKeyColumns_Click(ByVal sender As System.Object,_
+ByVal e As System.EventArgs)Handles btnKeyColumns.Click
+Try
+btnKeyColumns.Enabled =False
+Dim selectedTable As String =TreeView1.SelectedNode.Text
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT CONSTRAINT_NAME,"&_
+"COLUMN_NAME "&_
+"FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "&_
+"WHERE TABLE_NAME ='"&selectedTable &"'"
+TreeView1.BeginUpdate()
+TreeView1.Nodes.Clear()
+TreeView1.Nodes.Add(New TreeNode(selectedTable))
+Dim childNode As TreeNode =TreeView1.Nodes(0)
+Dim childCount As Integer =0
+Dim dr As SqlCeDataReader =cmd.ExecuteReader
+While dr.Read()
+childNode.Nodes.Insert(childCount,New TreeNode(_
+dr(0)&"("&dr(1)&")"))
+childCount +=1
+End While
+dr.Close()
+TreeView1.ExpandAll()
+TreeView1.EndUpdate()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+btnKeyColumns.Enabled =True
+End Try
+End Sub
+
+
+
+C#
+private void btnKeyColumns_Click(object sender,System.EventArgs e)
+{
+try
+{
+btnKeyColumns.Enabled =false;
+string selectedTable =treeView1.SelectedNode.Text;
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT CONSTRAINT_NAME,"+
+"COLUMN_NAME "+
+"FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "+
+"WHERE TABLE_NAME ='"+selectedTable +"'";
+treeView1.BeginUpdate();
+treeView1.Nodes.Clear();
+treeView1.Nodes.Add(new TreeNode(selectedTable));
+TreeNode childNode =treeView1.Nodes [0 ];
+int childCount =0;
+SqlCeDataReader dr =cmd.ExecuteReader();
+while(dr.Read())
+{
+childNode.Nodes.Insert(childCount,new TreeNode(
+dr [0 ].ToString()+"("+dr [1 ].ToString()+")"));
+childCount++;
+}
+dr.Close();
+treeView1.ExpandAll();
+treeView1.EndUpdate();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}finally
+{
+btnKeyColumns.Enabled =true;
+}
+}
+
+
+
+Visual Basic .NET
+Private Sub btnProviderTypes_Click(ByVal sender As System.Object,_
+ByVal e As System.EventArgs)Handles btnProviderTypes.Click
+Try
+btnProviderTypes.Enabled =False
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT TYPE_NAME,"&_
+"COLUMN_SIZE "&_
+"FROM INFORMATION_SCHEMA.PROVIDER_TYPES"
+TreeView1.BeginUpdate()
+TreeView1.Nodes.Clear()
+TreeView1.Nodes.Add(New TreeNode("Data Types"))
+Dim childNode As TreeNode =TreeView1.Nodes(0)
+Dim childCount As Integer =0
+Dim dr As SqlCeDataReader =cmd.ExecuteReader
+While dr.Read
+childNode.Nodes.Insert(childCount,New TreeNode(_
+dr(0)&"("&dr(1)&")"))
+childCount +=1
+End While
+dr.Close()
+TreeView1.ExpandAll()
+TreeView1.EndUpdate()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+btnProviderTypes.Enabled =True
+End Try
+End Sub
+
+
+
+C#
+private void btnProviderTypes_Click(object sender,System.EventArgs e)
+{
+try
+{
+btnProviderTypes.Enabled =false;
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT TYPE_NAME,"+
+"COLUMN_SIZE "+
+"FROM INFORMATION_SCHEMA.PROVIDER_TYPES";
+treeView1.BeginUpdate();
+treeView1.Nodes.Clear();
+treeView1.Nodes.Add(new TreeNode("Data Types"));
+TreeNode childNode =treeView1.Nodes [0 ];
+int childCount =0;
+SqlCeDataReader dr =cmd.ExecuteReader();
+while(dr.Read())
+{
+childNode.Nodes.Insert(childCount,new TreeNode(
+dr [0 ].ToString()+"("+dr [1 ].ToString()+")"));
+childCount++;
+}
+dr.Close();
+treeView1.ExpandAll();
+treeView1.EndUpdate();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+btnProviderTypes.Enabled =true;
+}
+}

@@ -1,0 +1,325 @@
+Visual Basic .NET
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;Password=")
+cn.Open()
+'Perform your database operation here
+'Catch your database errors
+Catch sqlex As SqlCeException
+'Declare your SqlCeError object
+Dim sqlError As SqlCeError
+'Iterate through the collection of database errors
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+'Catch nondatabase errors
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+'Ensure that the database connection gets closed no matter what errors occur
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+C#
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+"Password=");
+cn.Open();
+//Perform your database operation here
+}
+//Catch your database errors
+catch(SqlCeException sqlex)
+{
+//Iterate through the collection of database errors
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+//Catch nondatabase errors
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+//Ensure that the database connection gets closed no matter what errors occur
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+
+Visual Basic .NET
+Dim cmd As SqlCeCommand =cn.CreateCommand
+C#
+SqlCeCommand cmd =cn.CreateCommand();
+
+
+Visual Basic .NET
+cmd.CommandText ="INSERT INTO Products ("&_
+"ProductName,"&_
+"SupplierID,"&_
+"CategoryID,"&_
+"UnitPrice,"&_
+"UnitsInStock,"&_
+"Discontinued)"&_
+"VALUES "&_
+"(?,?,?,?,?,?)"
+
+C#
+cmd.CommandText ="INSERT INTO Products ("+
+"ProductName,"+
+"SupplierID,"+
+"CategoryID,"+
+"UnitPrice,"+
+"UnitsInStock,"+
+"Discontinued)"+
+"VALUES "+
+"(?,?,?,?,?,?)";
+
+
+Visual Basic .NET
+cmd.Parameters.Add("@ProductName","Axim")
+cmd.Parameters.Add("@SupplierID",1)
+cmd.Parameters.Add("@CategoryID",1)
+cmd.Parameters.Add("@UnitPrice",350)
+cmd.Parameters.Add("@UnitsInStock",20)
+cmd.Parameters.Add("@Discontinued",1)
+C#
+cmd.Parameters.Add("@ProductName","Axim");
+cmd.Parameters.Add("@SupplierID",1);
+cmd.Parameters.Add("@CategoryID",1);
+cmd.Parameters.Add("@UnitPrice",350);
+cmd.Parameters.Add("@UnitsInStock",20);
+cmd.Parameters.Add("@Discontinued",1);
+
+
+Visual Basic .NET
+cmd.Prepare()
+cmd.ExecuteNonQuery()
+C#
+cmd.Prepare();
+cmd.ExecuteNonQuery();
+
+
+Visual Basic .NET
+Dim cn As SqlCeConnection
+Dim trans as SqlCeTransaction
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;Password=")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+'Declare your SqlCeTransaction object
+'Start your transaction by calling the BeginTransaction method
+trans =cn.BeginTransaction()
+'Assign SqlCeTransaction object to the command
+cmd.Transaction =trans
+'Perform your transactional database operations here
+'If all goes well
+trans.Commit()
+Catch sqlex As SqlCeException
+'If things don't go so well
+trans.Rollback()
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+C#
+SqlCeConnection cn =null;
+SqlCeTransaction trans =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+//Declare your SqlCeTransaction object
+//Start your transaction by calling the BeginTransaction method
+trans =cn.BeginTransaction();
+//Assign SqlCeTransaction object to the command
+cmd.Transaction =trans;
+//Perform your transactional database operations here
+//If all goes well
+trans.Commit();
+}
+catch(SqlCeException sqlex)
+{
+//If things don't go so well
+trans.Rollback();
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;"&_
+"Password=")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+'Declare the SqlCeDataReader variable
+Dim dr As SqlCeDataReader
+cmd.CommandText ="Products"
+cmd.CommandType =CommandType.TableDirect
+'Instantiate the SqlCeDataReader
+dr =cmd.ExecuteReader()
+'Loop through the rows and fill a combo box
+While dr.Read()
+ComboBox1.Items.Add(dr.GetValue(0))
+End While
+'Close the SqlCeDataReader
+dr.Close()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+C#
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+//Declare the SqlCeDataReader variable
+SqlCeDataReader dr;
+cmd.CommandText ="Products";
+cmd.CommandType =CommandType.TableDirect;
+//Instantiate the SqlCeDataReader
+dr =cmd.ExecuteReader();
+//Loop through the rows and fill a combo box
+while (dr.Read()){
+comboBox1.Items.Add(dr.GetValue(0));
+}
+//Close the SqlCeDataReader
+dr.Close();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+
+Visual Basic .NET
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;"&_
+"Password=")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="Products"
+cmd.CommandType =CommandType.TableDirect
+'Create a SqlCeDataAdapter object
+Dim da As New SqlCeDataAdapter(cmd)
+'Create a DataSet object
+Dim ds As New DataSet
+'Fill the DataSet
+da.Fill(ds)
+'Bind the DataGrid to the DataTable contained in the DataSet
+DataGrid1.DataSource =ds.Tables(0)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+
+C#
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="Products";
+cmd.CommandType =CommandType.TableDirect;
+//Create a SqlCeDataAdapter object
+SqlCeDataAdapter da =new SqlCeDataAdapter(cmd);
+//Create a DataSet object
+DataSet ds =new DataSet();
+//Fill the DataSet
+da.Fill(ds);
+//Bind the DataGrid to the DataTable contained in the DataSet
+dataGrid1.DataSource =ds.Tables [0 ];
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+

@@ -1,0 +1,504 @@
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;Password=")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT UnitPrice,(UnitPrice +1)"&_
+"AS ""New Unit Price""FROM Products"
+Dim da As New SqlCeDataAdapter(cmd)
+Dim ds As New DataSet
+da.Fill(ds)
+DataGrid1.Enabled =False
+DataGrid1.DataSource =ds.Tables(0)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+DataGrid1.Enabled =True
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT UnitPrice,(UnitPrice +1)"+
+"AS \"New Unit Price \"FROM Products";
+SqlCeDataAdapter da =new SqlCeDataAdapter(cmd);
+DataSet ds =new DataSet();
+da.Fill(ds);
+dataGrid1.Enabled =false;
+dataGrid1.DataSource =ds.Tables [0 ];
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+dataGrid1.Enabled =true;
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT UnitPrice,(UnitPrice -1)"&_
+"AS ""New Unit Price""FROM Products"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT UnitPrice,(UnitPrice -1)"+
+"AS \"New Unit Price \"FROM Products";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT UnitPrice,(UnitPrice *2)"&_
+"AS ""New Unit Price""FROM Products"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT UnitPrice,(UnitPrice *2)"+
+"AS \"New Unit Price \"FROM Products";
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT UnitPrice,(UnitPrice /2)"&_
+"AS ""New Unit Price""FROM Products"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT UnitPrice,(UnitPrice /2)"+
+"AS \"New Unit Price \"FROM Products";
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT UnitPrice,UnitsInStock FROM Products "&_
+"WHERE UnitsInStock %2 ='0'"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT UnitPrice,UnitsInStock FROM Products "+
+"WHERE UnitsInStock %2 ='0'";
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT SupplierID,CategoryID,(SupplierID &CategoryID)"&_
+"AS ""Bitwise And""FROM Products"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT SupplierID,CategoryID,(SupplierID &CategoryID)"+
+"AS \"Bitwise And \"FROM Products";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT SupplierID,CategoryID,(SupplierID |CategoryID)"&_
+"AS ""Bitwise OR""FROM Products"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT SupplierID,CategoryID,(SupplierID |CategoryID)"+
+"AS \"Bitwise OR \"FROM Products";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT SupplierID,CategoryID,(SupplierID ^ CategoryID))"&_
+"AS ""Exclusive OR""FROM Products"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT SupplierID,CategoryID,(SupplierID ^ CategoryID))"+
+"AS \"Exclusive OR \"FROM Products";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT SupplierID,(~SupplierID)"&_
+"AS ""Bitwise Not""FROM Products"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT SupplierID,(~SupplierID)"+
+"AS \"Bitwise Not \"FROM Products";
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ProductName,CategoryID FROM Products "&_
+"WHERE CategoryID =2"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ProductName,CategoryID FROM Products "+
+"WHERE CategoryID =2";
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "&_
+"WHERE UnitsInStock >20"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "+
+"WHERE UnitsInStock >20";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitPrice FROM Products "&_
+"WHERE UnitPrice <10"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitPrice FROM Products "+
+"WHERE UnitPrice <10";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "&_
+"WHERE UnitPrice >=30"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "+
+"WHERE UnitPrice >=30";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT FirstName,LastName,HireDate FROM Employees "&_
+"WHERE HireDate <='1993-10-17'"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT FirstName,LastName,HireDate FROM Employees "+
+"WHERE HireDate <='1993-10-17'";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT FirstName,LastName,Title FROM Employees "&_
+"WHERE Title <>'Sales Representative'"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT FirstName,LastName,Title FROM Employees "+
+"WHERE Title <>'Sales Representative'";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT FirstName,LastName,City FROM Employees "&_
+"WHERE City !='London'"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT FirstName,LastName,City FROM Employees "+
+"WHERE City !='London'";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "&_
+"WHERE UnitsInStock !<100"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "+
+"WHERE UnitsInStock !<100";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "&_
+"WHERE UnitsInStock !>100"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "+
+"WHERE UnitsInStock !>100";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "&_
+"WHERE UnitsInStock <ALL "&_
+"(SELECT ProductID FROM Products "&_
+"WHERE SupplierID =10)"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "+
+"WHERE UnitsInStock <ALL "+
+"(SELECT ProductID FROM Products "+
+"WHERE SupplierID =10)";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "&_
+"WHERE UnitsInStock <100 "&_
+"AND CategoryID =2"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "+
+"WHERE UnitsInStock <100 "+
+"AND CategoryID =2";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "&_
+"WHERE UnitsInStock =ANY "&_
+"(SELECT ProductID FROM Products "&_
+"WHERE SupplierID =2)"
+
+
+C#
+//insert at the top of your classusing System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "+
+"WHERE UnitsInStock =ANY "+
+"(SELECT ProductID FROM Products "+
+"WHERE SupplierID =2)";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "&_
+"WHERE UnitsInStock BETWEEN 60 AND 70"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ProductName,UnitsInStock FROM Products "+
+"WHERE UnitsInStock BETWEEN 60 AND 70";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT CompanyName,ContactName FROM Customers "&_
+"WHERE EXISTS "&_
+"(SELECT CustomerID FROM Orders "&_
+"WHERE Orders.CustomerID =Customers.CustomerID)"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT CompanyName,ContactName FROM Customers "+
+"WHERE EXISTS "+
+"(SELECT CustomerID FROM Orders "+
+"WHERE Orders.CustomerID =Customers.CustomerID)";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT CompanyName,Region FROM Customers "&_
+"WHERE Region IN ('OR','WA','BC')"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT CompanyName,Region FROM Customers "+
+"WHERE Region IN ('OR','WA','BC')";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipName,ShipCountry FROM Orders "&_
+"WHERE ShipCountry LIKE '%us%'"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;//insert in a function or click event
+cmd.CommandText ="SELECT ShipName,ShipCountry FROM Orders "+
+"WHERE ShipCountry LIKE '%us%'";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipName,ShipCountry FROM Orders "&_
+"WHERE ShipCountry NOT LIKE '%us%'"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipName,ShipCountry FROM Orders "+
+"WHERE ShipCountry NOT LIKE '%us%'";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipName,ShipCountry FROM Orders "&_
+"WHERE ShipCountry ='Ireland'"&_
+"OR ShipCountry ='Italy'"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipName,ShipCountry FROM Orders "+
+"WHERE ShipCountry ='Ireland'"+
+"OR ShipCountry ='Italy'";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT +(Freight -50)AS ""Result""FROM Orders "&_
+"WHERE OrderID =10405"
+
+
+C#
+//insert at the top of your classusing System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT +(Freight -50)AS \"Result \"FROM Orders "+
+"WHERE OrderID =10405";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT -(Freight -50)AS ""Result""FROM Orders "&_
+"WHERE OrderID =10405"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT -(Freight -50)AS \"Result \"FROM Orders "+
+"WHERE OrderID =10405";
+

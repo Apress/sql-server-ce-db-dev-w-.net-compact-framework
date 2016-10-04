@@ -1,0 +1,812 @@
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;"&_
+"Password=")cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT AVG(Freight)AS ""Freight Average""FROM Orders"
+Dim da As New SqlCeDataAdapter(cmd)
+Dim ds As New DataSet
+da.Fill(ds)
+DataGrid1.Enabled =False
+DataGrid1.DataSource =ds.Tables(0)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+DataGrid1.Enabled =True
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT AVG(Freight)AS \"Freight Average \"FROM Orders";
+SqlCeDataAdapter da =new SqlCeDataAdapter(cmd);
+DataSet ds =new DataSet();
+da.Fill(ds);
+dataGrid1.Enabled =false;
+dataGrid1.DataSource =ds.Tables [0 ];
+}
+catch(SqlCeException sqlex){
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+dataGrid1.Enabled =true;
+if (cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT COUNT(*)AS ""Number of Rows""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT COUNT(*)AS \"Number of Rows \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT MAX(Freight)AS ""Highest Freight Price""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT MAX(Freight)AS \"Highest Freight Price \"FROM Orders";
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT MIN(Freight)AS ""Lowest Freight Price""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT MIN(Freight)AS \"Lowest Freight Price \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT SUM(Freight)AS ""The Sum of all Freight Prices"""&_
+"FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT SUM(Freight)AS \"The Sum of all Freight Prices \""+
+"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,DATEADD(m,1,OrderDate)"&_
+"AS ""OrderDate +1 Month""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,DATEADD(m,1,OrderDate)"+
+"AS \"OrderDate +1 Month \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,RequiredDate,"&_
+"DATEDIFF(d,OrderDate,RequiredDate)AS ""Diff""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,RequiredDate,"+
+"DATEDIFF(d,OrderDate,RequiredDate)AS \"Diff \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,DATENAME(dw,OrderDate)"&_
+"AS ""Day of the Week""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,DATENAME(dw,OrderDate)"+
+"AS \"Day of the Week \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,DATEPART(m,OrderDate)"&_
+"AS ""Month""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,DATEPART(m,OrderDate)"+
+"AS \"Month \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT GETDATE()AS ""Today's Date""FROM Orders "&_
+"WHERE OrderID =10405"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT GETDATE()AS \"Today's Date \"FROM Orders "+
+"WHERE OrderID =10405";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT (Freight – 100))AS ""Freight -100"","&_
+"ABS(Freight – 100))AS ""ABS(Freight – 100))""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT (Freight – 100))AS \"Freight -100 \","+
+"ABS(Freight – 100))AS \"ABS(Freight – 100))\ ""FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ACOS(Freight)AS ""Arccosine""FROM Orders "&_
+"WHERE Freight <=1"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ACOS(Freight)AS \"Arccosine \"FROM Orders "+
+"WHERE Freight <=1";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ASIN(Freight)AS ""Arcsine""FROM Orders "&_
+"WHERE Freight <=1"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ASIN(Freight)AS \"Arcsine \"FROM Orders "+
+"WHERE Freight <=1";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ATAN(Freight)AS ""Arctangent""FROM Orders "&_
+"WHERE Freight <=1"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ATAN(Freight)AS \"Arctangent \"FROM Orders "+
+"WHERE Freight <=1";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ATN2(Freight,(Freight -.3))AS ""ATN2""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ATN2(Freight,(Freight -.3))AS \"ATN2 \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT Freight,CEILING(Freight)"&_
+"AS ""Freight Ceiling""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT Freight,CEILING(Freight)"+
+"AS \"Freight Ceiling \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT COS(Freight)AS ""Cosine""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT COS(Freight)AS \"Cosine \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT COT(Freight)AS ""Cotangent""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT COT(Freight)AS \"Cotangent \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT DEGREES(Freight)AS ""Degrees""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT DEGREES(Freight)AS \"Degrees \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT Freight,EXP(Freight)"&_
+"AS ""Exponential Freight""FROM Orders "&_
+"WHERE Freight <100"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT Freight,EXP(Freight)"+
+"AS \"Exponential Freight \"FROM Orders "+
+"WHERE Freight <100";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT Freight,FLOOR(Freight)"&_
+"AS ""Freight Floor""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT Freight,FLOOR(Freight)"+
+"AS \"Freight Floor \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT Freight,LOG(Freight)"&_
+"AS ""Freight Logarithm""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT Freight,LOG(Freight)"+
+"AS \"Freight Logarithm \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT Freight,LOG10(Freight)"&_
+"AS ""Freight Base 10 Logarithm""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT Freight,LOG10(Freight)"+
+"AS \"Freight Base 10 Logarithm \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT PI()AS ""PI""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT PI()AS \"PI \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT Freight,POWER(Freight,3)"&_
+"AS ""Freight Cubed""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT Freight,POWER(Freight,3)"+
+"AS \"Freight Cubed \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT Freight,RADIANS(Freight)"&_
+"AS ""Radians""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT Freight,RADIANS(Freight)"+
+"AS \"Radians \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT EmployeeID,RAND(EmployeeID)"&_
+"AS ""Random Numbers""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT EmployeeID,RAND(EmployeeID)"+
+"AS \"Random Numbers \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT Freight,ROUND(Freight,1)"&_
+"AS ""Rounded""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT Freight,ROUND(Freight,1)"+
+"AS \"Rounded \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT (Freight – 100))AS ""Freight – 100""","&_
+"SIGN(Freight -100)AS ""Sign""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT (Freight – 100))AS ""Freight – 100""","+
+"SIGN(Freight -100)AS \"Sign \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT Freight,SIN(Freight)AS ""SINE""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT Freight,SIN(Freight)AS \"SINE \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT Freight,SQRT(Freight)AS ""Square Root""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT Freight,SQRT(Freight)AS \"Square Root \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT Freight,TAN(Freight)AS ""Tangent""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT Freight,TAN(Freight)AS \"Tangent \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT EmployeeID,NCHAR(EmployeeID)"&_
+"AS ""Strange Characters""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT EmployeeID,NCHAR(EmployeeID)"+
+"AS \"Strange Characters \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,CHARINDEX('n',ShipCity)"&_
+"AS ""Position of 'n'""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,CHARINDEX('n',ShipCity)"+
+"AS \"Position of 'n'\"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,LEN(ShipCity)"&_
+"AS ""Length""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,LEN(ShipCity)"+
+"AS \"Length \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,LOWER(ShipCity)"&_
+"AS ""Lower Case""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,LOWER(ShipCity)"+
+"AS \"Lower Case \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT (''+ShipCity)AS ""Spaced ShipCity"","&_
+"LTRIM(''+ShipCity)AS ""Spaces removed""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT (''+ShipCity)AS \"Spaced ShipCity \","+
+"LTRIM(''+ShipCity)AS \"Spaces removed \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,PATINDEX('S%',ShipCity)"&_
+"AS ""Cities that start with 'S'""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,PATINDEX('S%',ShipCity)"+
+"AS \"Cities that start with 'S'\"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,"&_
+REPLACE(ShipCity,'Seattle','Silverdale')AS ""Replaced""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,REPLACE(ShipCity,'Seattle','Silverdale')"+
+"AS \"Replaced \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,REPLICATE(ShipCity,3)"&_
+"AS ""Replicated 3 Times""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,REPLICATE(ShipCity,3)"+
+"AS \"Replicated 3 Times \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT (ShipCity +'')AS ""Spaced ShipCity"","&_
+"RTRIM(ShipCity +'')AS ""Spaces removed""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT (ShipCity +'')AS \"Spaced ShipCity \","+
+"RTRIM(ShipCity +'')AS \"Spaces removed \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipCity +SPACE(3)+ShipAddress "&_
+"AS ""Ship City and Address""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipCity +SPACE(3)+ShipAddress "+
+"AS \"Ship City and Address \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT Freight,STR(Freight,6,1)"&_
+"AS ""STR""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT Freight,STR(Freight,6,1)"+
+"AS \"STR \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,STUFF(ShipCity,3,3,'SQL')"&_
+"AS ""A Stuffed ShipCity""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,STUFF(ShipCity,3,3,'SQL')"+
+"AS \"A Stuffed ShipCity \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,SUBSTRING(ShipCity,1,3)"&_
+"AS ""The first 3 characters""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,SUBSTRING(ShipCity,1,3)"+
+"AS \"The first 3 characters \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,UNICODE(ShipCity)"&_
+"AS ""The UNICODE value""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,UNICODE(ShipCity)"+
+"AS \"The UNICODE value \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,UPPER(ShipCity)"&_
+"AS ""Uppercase ShipCity""FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,UPPER(ShipCity)"+
+"AS \"Uppercase ShipCity \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="CREATE TABLE IdentityTable (Col1 int identity,Col2 nchar(20))"cmd.ExecuteNonQuery()
+cmd.CommandText ="INSERT INTO IdentityTable (Col2)VALUES ('some data')"
+cmd.ExecuteNonQuery()
+cmd.CommandText ="SELECT @@IDENTITY AS ""@@IDENTITY""FROM IdentityTable"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="CREATE TABLE IdentityTable (Col1 int identity,Col2 nchar(20))";
+cmd.ExecuteNonQuery();
+cmd.CommandText ="INSERT INTO IdentityTable (Col2)VALUES ('some data')";
+cmd.ExecuteNonQuery();
+cmd.CommandText ="SELECT @@IDENTITY AS \"@@IDENTITY \"FROM IdentityTable";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,"&_
+"CASE ShipCity "&_
+"WHEN 'Seattle'THEN 'Coffee'"&_
+"WHEN 'Eugene'THEN 'Ducks'"&_
+"WHEN 'San Francisco'THEN 'Golden Gate'"&_
+"END "&_
+"FROM Orders"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,"+
+"CASE ShipCity "+
+"WHEN 'Seattle'THEN 'Coffee'"+
+"WHEN 'Eugene'THEN 'Ducks'"+
+"WHEN 'San Francisco'THEN 'Golden Gate'"+
+"END "+
+"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT Region,ReportsTo,COALESCE(Region,ReportsTo)"&_
+"AS ""Coalesce""FROM Employees"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT Region,ReportsTo,COALESCE(Region,ReportsTo)"+
+"AS \"Coalesce \"FROM Employees";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,CONVERT(nvarchar(10),OrderDate,102)"&_
+"AS ""Converted ANSI style""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,CONVERT(nvarchar(10),OrderDate,102)"+
+"AS \"Converted ANSI style \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,DATALENGTH(ShipCity)"&_
+"AS ""DATALENGTH""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT ShipCity,DATALENGTH(ShipCity)"+
+"AS \"DATALENGTH \"FROM Orders";
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT NEWID()AS ""Unique Identifier""FROM Orders"
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT NEWID()AS \"Unique Identifier \"FROM Orders";
+

@@ -1,0 +1,464 @@
+Visual Basic .NET
+Private Sub btnCreateSubscription_Click(ByVal sender As System.Object,&_
+ByVal e As System.EventArgs)Handles btnCreateSubscription.Click
+Dim rep As SqlCeReplication
+Try
+btnCreateSubscription.Enabled =False
+rep =New SqlCeReplication()
+'This is the connection string to your local SQL Server CE database file
+rep.SubscriberConnectionString ="Data Source=\My Documents \"&_
+"IntelligenceData.sdf;"&_
+"SSCE:Database Password=apress"
+'If database doesn't exist then...
+If Not File.Exists("\My Documents \IntelligenceData.sdf")Then
+'Add a subscription and create the local database
+rep.AddSubscription(AddOption.CreateDatabase)
+End IfCatch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message,"Error")
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message,"Error")
+Finally
+rep.Dispose()
+btnCreateSubscription.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnCreateSubscription_Click(object sender,System.EventArgs e)
+{
+SqlCeReplication rep =null;
+try
+{
+btnCreateSubscription.Enabled =false;
+rep =new SqlCeReplication();
+//This is the connection string to your local SQL Server CE database file
+rep.SubscriberConnectionString ="Data Source=\\My Documents \\"+
+"IntelligenceData.sdf;"+
+"SSCE:Database Password=apress";
+//If database doesn't exist then...
+if (!File.Exists("\\My Documents \\IntelligenceData.sdf"))
+{
+//Add a subscription and create the local database
+rep.AddSubscription(AddOption.CreateDatabase);
+}
+}
+catch (SqlCeException sqlex)
+{
+foreach (SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message,"Error");}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message,"Error");
+}
+finally
+{
+rep.Dispose();
+btnCreateSubscription.Enabled =true;
+}
+}
+
+
+Visual Basic .NET
+Private Sub btnSynchronize_Click(ByVal sender As System.Object,&_
+ByVal e As System.EventArgs)Handles btnSynchronize.Click
+Dim rep As SqlCeReplication
+Try
+btnSynchronize.Enabled =False
+rep =New SqlCeReplication()
+'This is the URL that points to sscesa20.dll running on IIS
+rep.InternetUrl ="https://seawolf/fieldagentrda/sscesa20.dll"
+'This is your Basic Authentication username
+rep.InternetLogin ="robtiffany"
+'This is your Basic Authentication password
+rep.InternetPassword ="pinnacle"'This is the name of the server running SQL Server
+rep.Publisher ="seawolf"
+'This is the name of the actual database that you're publishing
+rep.PublisherDatabase ="IntelligenceData"
+'This is your SQL Server username
+rep.PublisherLogin ="sa"
+'This is your SQL Server password
+rep.PublisherPassword ="apress"
+'This is the name that you give to your publication during the wizard setup
+rep.Publication ="IntelligenceDataPublication"
+'This anonymous subscriber name can be anything you want it to be
+rep.Subscriber ="Subscriber"
+'This is the connection string to your local SQL Server CE database file
+rep.SubscriberConnectionString ="Data Source=\My Documents \"&_
+"IntelligenceData.sdf;"&_
+"SSCE:Database Password=apress"
+'If database already exists then...
+If File.Exists("\My Documents \IntelligenceData.sdf")Then
+'Synchronize with SQL Server
+rep.Synchronize()
+Else
+MessageBox.Show("You must first create a database","Error")
+End If
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message,"Error")
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message,"Error")
+Finally
+rep.Dispose()
+btnSynchronize.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnSynchronize_Click(object sender,System.EventArgs e)
+{
+SqlCeReplication rep =null;
+try
+{
+btnSynchronize.Enabled =false;
+rep =new SqlCeReplication();
+//This is the URL that points to sscesa20.dll running on IIS
+rep.InternetUrl ="https://seawolf/fieldagentrda/sscesa20.dll";
+//This is your Basic Authentication username
+rep.InternetLogin ="robtiffany";
+//This is your Basic Authentication password
+rep.InternetPassword ="pinnacle";
+//This is the name of the server running SQL Server
+rep.Publisher ="seawolf";
+//This is the name of the actual database that you're publishing
+rep.PublisherDatabase ="IntelligenceData";
+//This is your SQL Server username
+rep.PublisherLogin ="sa";
+//This is your SQL Server password
+rep.PublisherPassword ="apress";
+//This is the name that you give to your publication
+//during the wizard setup
+rep.Publication ="IntelligenceDataPublication";
+//This anonymous subscriber name can be anything you want it to be
+rep.Subscriber ="Subscriber";
+//This is the connection string to your local SQL Server CE database file
+rep.SubscriberConnectionString ="Data Source=\\My Documents \\"+
+"IntelligenceData.sdf;"+
+"SSCE:Database Password=apress";//If database already exists then...
+if (File.Exists("\\My Documents \\IntelligenceData.sdf"))
+{
+//Synchronize with SQL Server
+rep.Synchronize();
+}
+else
+{
+MessageBox.Show("You must first create a database","Error");
+}
+}
+catch (SqlCeException sqlex)
+{
+foreach (SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message,"Error");
+}
+}
+catch (Exception ex)
+{
+MessageBox.Show(ex.Message,"Error");
+}
+finally
+{
+rep.Dispose();
+btnSynchronize.Enabled =true;
+}
+}
+
+
+
+Visual Basic .NET
+Private Sub btnAddMemo_Click(ByVal sender As System.Object,&_
+ByVal e As System.EventArgs)Handles btnAddMemo.Click
+Dim cn As SqlCeConnection
+Try
+btnAddMemo.Enabled =False
+cn =New SqlCeConnection("Data Source=\My Documents \"&_
+"IntelligenceData.sdf;Password=apress")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand()
+'insert Memo Data
+cmd.CommandText ="INSERT INTO FieldMemos ("&_
+"MemoTo,"&_
+"MemoFrom,"&_
+"MemoDateTime,"&_
+"MemoCity,"&_
+"MemoState,"&_
+"MemoSubject,"&_
+"MemoPriority,"&_
+"MemoBody)"&_
+"VALUES "&_
+"(?,?,?,?,?,?,?,?)"
+cmd.Parameters.Add("@MemoTo","Office of the Director")
+cmd.Parameters.Add("@MemoFrom","Neo")
+cmd.Parameters.Add("@MemoDateTime",System.DateTime.Now)
+cmd.Parameters.Add("@MemoCity","Houston")
+cmd.Parameters.Add("@MemoState","TX")
+cmd.Parameters.Add("@MemoSubject","Suspicious Activity")
+cmd.Parameters.Add("@MemoPriority",2)
+cmd.Parameters.Add("@MemoBody",&_
+"Observed suspicious meeting with Agent Smith")
+cmd.Prepare()
+cmd.ExecuteNonQuery()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message,"Error")
+Next
+Catch ex As ExceptionMessageBox.Show(ex.Message,"Error")
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+btnAddMemo.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnAddMemo_Click(object sender,System.EventArgs e)
+{
+SqlCeConnection cn =null;
+try
+{
+btnAddMemo.Enabled =false;
+cn =new SqlCeConnection("Data Source=\\My Documents"+
+"\\IntelligenceData.sdf;Password=apress");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+//Insert Memo Data
+cmd.CommandText ="INSERT INTO FieldMemos ("+
+"MemoTo,"+
+"MemoFrom,"+
+"MemoDateTime,"+
+"MemoCity,"+
+"MemoState,"+
+"MemoSubject,"+
+"MemoPriority,"+
+"MemoBody)"+
+"VALUES "+
+"(?,?,?,?,?,?,?,?)";
+cmd.Parameters.Add("@MemoTo","Office of the Director");
+cmd.Parameters.Add("@MemoFrom","Trinity");
+cmd.Parameters.Add("@MemoDateTime",System.DateTime.Now);
+cmd.Parameters.Add("@MemoCity","Los Angeles");
+cmd.Parameters.Add("@MemoState","CA");
+cmd.Parameters.Add("@MemoSubject","Strange Activity");
+cmd.Parameters.Add("@MemoPriority",1);cmd.Parameters.Add("@MemoBody","Agent Smith seems to be replicating");
+cmd.Prepare();
+cmd.ExecuteNonQuery();
+}
+catch(SqlCeException sqlex)
+{
+foreach (SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message,"Error");
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message,"Error");
+}
+finally
+{
+if (cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+btnAddMemo.Enabled =true;
+}
+}
+
+
+Visual Basic .NET
+Private Sub btnReinitializeSubscription_Click(ByVal sender As System.Object,&_
+ByVal e As System.EventArgs)Handles btnReinitializeSubscription.Click
+Dim rep As SqlCeReplicationTry
+btnReinitializeSubscription.Enabled =False
+rep =New SqlCeReplication
+'This is the URL that points to sscesa20.dll running on IIS
+rep.InternetUrl ="https://seawolf/fieldagentrda/sscesa20.dll"
+'This is your Basic Authentication username
+rep.InternetLogin ="robtiffany"
+'This is your Basic Authentication password
+rep.InternetPassword ="pinnacle"
+'This is the name of the server running SQL Server
+rep.Publisher ="seawolf"
+'This is the name of the actual database that you're publishing
+rep.PublisherDatabase ="IntelligenceData"
+'This is your SQL Server username
+rep.PublisherLogin ="sa"
+'This is your SQL Server password
+rep.PublisherPassword ="apress"
+'This is the name that you give to your publication during the wizard setup
+rep.Publication ="IntelligenceDataPublication"
+'This anonymous subscriber name can be anything you want it to be
+rep.Subscriber ="Subscriber"
+'This is the connection string to your local SQL Server CE database file
+rep.SubscriberConnectionString ="Data Source=\My Documents \"&_
+"IntelligenceData.sdf;"&_
+"SSCE:Database Password=apress"
+'If database already exists then...
+If File.Exists("\My Documents \IntelligenceData.sdf")Then
+'This uploads your changes and then marks the
+'subscription for reinitialization
+rep.ReinitializeSubscription(True)
+'Synchronize with SQL Serverrep.Synchronize()
+Else
+MessageBox.Show("You must first create a database","Error")
+End If
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message,"Error")
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message,"Error")
+Finally
+rep.Dispose()
+btnReinitializeSubscription.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnReinitializeSubscription_Click(object sender,System.EventArgs e)
+{
+SqlCeReplication rep =null;
+try
+{
+btnReinitializeSubscription.Enabled =false;
+rep =new SqlCeReplication();
+//This is the URL that points to sscesa20.dll running on IIS
+rep.InternetUrl ="https://seawolf/fieldagentrda/sscesa20.dll";
+//This is your Basic Authentication username
+rep.InternetLogin ="robtiffany";
+//This is your Basic Authentication password
+rep.InternetPassword ="pinnacle";
+//This is the name of the server running SQL Server
+rep.Publisher ="seawolf";
+//This is the name of the actual database that you're publishing
+rep.PublisherDatabase ="IntelligenceData";//This is your SQL Server username
+rep.PublisherLogin ="sa";
+//This is your SQL Server password
+rep.PublisherPassword ="apress";
+//This is the name that you give to your publication
+//during the wizard setup
+rep.Publication ="IntelligenceDataPublication";
+//This anonymous subscriber name can be anything you want it to be
+rep.Subscriber ="Subscriber";
+//This is the connection string to your local SQL Server CE database file
+rep.SubscriberConnectionString ="Data Source=\\My Documents \\"+
+"IntelligenceData.sdf;"+
+"SSCE:Database Password=apress";
+//If database already exists then...
+if (File.Exists("\\My Documents \\IntelligenceData.sdf"))
+{
+//This uploads your changes and then marks the
+//subscription for reinitialization
+rep.ReinitializeSubscription(true);
+//Synchronize with SQL Server
+rep.Synchronize();
+}
+else
+{
+MessageBox.Show("You must first create a database","Error");
+}
+}
+catch (SqlCeException sqlex)
+{
+foreach (SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message,"Error");
+}
+}
+catch (Exception ex)
+{
+MessageBox.Show(ex.Message,"Error");}
+finally
+{
+rep.Dispose();
+btnReinitializeSubscription.Enabled =true;
+}
+}
+
+
+Visual Basic .NET
+Private Sub btnDropSubscription_Click(ByVal sender As System.Object,&_
+ByVal e As System.EventArgs)Handles btnDropSubscription.Click
+Dim rep As SqlCeReplication
+Try
+btnDropSubscription.Enabled =False
+rep =New SqlCeReplication()
+'This is the connection string to your local SQL Server CE database file
+rep.SubscriberConnectionString ="Data Source=\My Documents \"&_
+"IntelligenceData.sdf;"&_
+"SSCE:Database Password=apress"
+'If database already exists then...
+If File.Exists("\My Documents \IntelligenceData.sdf")Then
+'This drops the subscription but leaves the database
+rep.DropSubscription(DropOption.LeaveDatabase)
+Else
+MessageBox.Show("You must first create a database","Error")
+End If
+Catch sqlex As SqlCeExceptionDim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message,"Error")
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message,"Error")
+Finally
+rep.Dispose()
+btnDropSubscription.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnDropSubscription_Click(object sender,System.EventArgs e)
+{
+SqlCeReplication rep =null;
+try
+{
+btnDropSubscription.Enabled =false;
+rep =new SqlCeReplication();
+//This is the connection string to your local SQL Server CE database file
+rep.SubscriberConnectionString ="Data Source=\\My Documents \\"+
+"IntelligenceData.sdf;"+
+"SSCE:Database Password=apress";
+//If database already exists then...
+if (File.Exists("\\My Documents \\IntelligenceData.sdf"))
+{
+//This drops the subscription and deletes the database
+rep.DropSubscription(DropOption.LeaveDatabase);
+}
+else
+{
+MessageBox.Show("You must first create a database","Error");
+}
+}
+catch (SqlCeException sqlex)
+{
+foreach (SqlCeError sqlError in sqlex.Errors){
+MessageBox.Show(sqlError.Message,"Error");
+}
+}
+catch (Exception ex)
+{
+MessageBox.Show(ex.Message,"Error");
+}
+finally
+{
+rep.Dispose();
+btnDropSubscription.Enabled =true;
+}
+}
+
+

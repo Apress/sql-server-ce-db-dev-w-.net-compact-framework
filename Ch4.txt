@@ -1,0 +1,785 @@
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+Imports System.IO
+'insert in a function or click event
+Dim sqlEngine As SqlCeEngine
+Try
+If File.Exists("\My Documents \dbvb.sdf")Then
+File.Delete("\My Documents \dbvb.sdf")
+End If
+sqlEngine =New SqlServerCe.SqlCeEngine
+sqlEngine.LocalConnectionString ="Data Source=\My
+Documents \dbvb.sdf;Password=apress;Encrypt Database=False"
+sqlEngine.CreateDatabase()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+sqlEngine.Dispose()
+End Try
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+using System.IO;
+//insert in a function or click event
+SqlCeEngine sqlEngine =null;
+try
+{
+if (File.Exists("\\My Documents \\dbcs.sdf"))
+{
+File.Delete("\\My Documents \\dbcs.sdf");
+}
+sqlEngine =new SqlCeEngine();
+sqlEngine.LocalConnectionString ="Data Source=\\My
+Documents \\dbcs.sdf;Password=apress;Encrypt Database=False";
+sqlEngine.CreateDatabase();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+sqlEngine.Dispose();
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+Imports System.IO
+'insert in a function or click event
+Dim Source As String ="\My Documents \dbvb.sdf"
+Dim Destination As String ="\My Documents \new.sdf"
+Dim sqlEngine As SqlCeEngine
+Try
+If File.Exists(Source)Then
+sqlEngine =New SqlCeEngine("Data Source="&Source &";Password=apress;")
+sqlEngine.Compact("Data Source="&Destination)
+File.Delete(Source)
+File.Move(Destination,Source)
+End If
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+sqlEngine.Dispose()
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+using System.IO;
+//insert in a function or click event
+String source ="\\My Documents \\dbcs.sdf";
+String destination ="\\My Documents \\newcs.sdf";
+SqlCeEngine sqlEngine =null;
+try
+{
+if (File.Exists(source))
+{
+sqlEngine =new SqlCeEngine("Data Source="+source +";Password=apress;");
+sqlEngine.Compact("Data Source="+destination);
+File.Delete(source);
+File.Move(destination,source);
+}
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+sqlEngine.Dispose();
+}
+
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.IO
+'insert in a function or click event
+Try
+If File.Exists("\My Documents \dbvb.sdf")Then
+File.Delete("\My Documents \dbvb.sdf")
+End If
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+End Try
+C#
+//insert at the top of your class
+using System.IO;
+//insert in a function or click event
+try
+{
+if (File.Exists("\\My Documents \\dbcs.sdf"))
+{
+File.Delete("\\My Documents \\dbcs.sdf");
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \dbvb.sdf;Password=apress")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="CREATE TABLE TableOne ("&_
+"ColumnOne bigint,"&_
+"ColumnTwo integer,"&_
+"ColumnThree smallint,"&_"ColumnFour tinyint,"&_
+"ColumnFive bit,"&_
+"ColumnSix numeric(2,2),"&_
+"ColumnSeven money,"&_
+"ColumnEight float,"&_
+"ColumnNine real,"&_
+"ColumnTen datetime,"&_
+"ColumnEleven nchar(20),"&_
+"ColumnTwelve nvarchar(20),"&_
+"ColumnThirteen ntext,"&_
+"ColumnFourteen binary(20),"&_
+"ColumnFifteen varbinary(20),"&_
+"ColumnSixteen image,"&_
+"ColumnSeventeen uniqueidentifier)"
+cmd.ExecuteNonQuery()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\dbcs.sdf;Password=apress");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="CREATE TABLE TableOne ("+
+"ColumnOne bigint,"+
+"ColumnTwo integer,"+"ColumnThree smallint,"+
+"ColumnFour tinyint,"+
+"ColumnFive bit,"+
+"ColumnSix numeric(2,2),"+
+"ColumnSeven money,"+
+"ColumnEight float,"+
+"ColumnNine real,"+
+"ColumnTen datetime,"+
+"ColumnEleven nchar(20),"+
+"ColumnTwelve nvarchar(20),"+
+"ColumnThirteen ntext,"+
+"ColumnFourteen binary(20),"+
+"ColumnFifteen varbinary(20),"+
+"ColumnSixteen image,"+
+"ColumnSeventeen uniqueidentifier)";
+cmd.ExecuteNonQuery();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \dbvb.sdf;Password=apress")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="CREATE TABLE ColumnDefinition ("&_
+"ColumnOne integer IDENTITY(1,1)NOT NULL PRIMARY KEY,"&_
+"ColumnTwo nvarchar(20),"&_
+"ColumnThree uniqueidentifier ROWGUIDCOL,"&_
+"ColumnFour datetime DEFAULT GETDATE())"
+cmd.ExecuteNonQuery()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+FinallyIf cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\dbcs.sdf;Password=apress");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="CREATE TABLE ColumnDefinition ("+
+"ColumnOne integer IDENTITY(1,1)NOT NULL PRIMARY KEY,"+
+"ColumnTwo nvarchar(20),"+
+"ColumnThree uniqueidentifier ROWGUIDCOL,"+
+"ColumnFour datetime DEFAULT GETDATE())";
+cmd.ExecuteNonQuery();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \dbvb.sdf;Password=apress")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="CREATE TABLE ColumnConstraints ("&_
+"ColumnOne integer IDENTITY(1,1)NOT NULL PRIMARY KEY,"&_
+"ColumnTwo integer REFERENCES ColumnDefinition(ColumnOne)ON DELETE CASCADE)"
+cmd.ExecuteNonQuery()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\dbcs.sdf;Password=apress");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="CREATE TABLE ColumnConstraints ("+
+"ColumnOne integer IDENTITY(1,1)NOT NULL PRIMARY KEY,"+
+"ColumnTwo integer REFERENCES ColumnDefinition(ColumnOne)ON DELETE CASCADE)";
+cmd.ExecuteNonQuery();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \dbvb.sdf;Password=apress")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="CREATE TABLE TableConstraints ("&_
+"ColumnOne integer,"&_"ColumnTwo integer,"&_
+"ColumnThree integer,"&_
+"CONSTRAINT PK PRIMARY KEY (ColumnOne,ColumnTwo,ColumnThree))"
+cmd.ExecuteNonQuery()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\dbcs.sdf;Password=apress");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="CREATE TABLE TableConstraints ("+
+"ColumnOne integer,"+
+"ColumnTwo integer,"+
+"ColumnThree integer,"+
+"CONSTRAINT PK PRIMARY KEY (ColumnOne,ColumnTwo,ColumnThree))";
+cmd.ExecuteNonQuery();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \dbvb.sdf;Password=apress")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="ALTER TABLE ColumnDefinition "&_
+"ALTER COLUMN ColumnOne IDENTITY(100,10)"
+cmd.ExecuteNonQuery()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+NextCatch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\dbcs.sdf;Password=apress");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="ALTER TABLE ColumnDefinition "+
+"ALTER COLUMN ColumnOne IDENTITY(100,10)";
+cmd.ExecuteNonQuery();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \dbvb.sdf;Password=apress")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="ALTER TABLE ColumnDefinition "&_
+"ADD NewColumn bit"
+cmd.ExecuteNonQuery()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\dbcs.sdf;Password=apress");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="ALTER TABLE ColumnDefinition "+
+"ADD NewColumn bit";
+cmd.ExecuteNonQuery();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \dbvb.sdf;Password=apress")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="ALTER TABLE TableConstraints "&_
+"DROP CONSTRAINT PK"
+cmd.ExecuteNonQuery()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\dbcs.sdf;Password=apress");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="ALTER TABLE TableConstraints "+
+"DROP CONSTRAINT PK";
+cmd.ExecuteNonQuery();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \dbvb.sdf;Password=apress")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="DROP TABLE ColumnConstraints"
+cmd.ExecuteNonQuery()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try{
+cn =new SqlCeConnection("Data Source=\\My Documents \\dbcs.sdf;Password=apress");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="DROP TABLE ColumnConstraints";
+cmd.ExecuteNonQuery();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \dbvb.sdf;Password=apress")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="CREATE INDEX idxColumnTwo ON ColumnDefinition (ColumnTwo)"
+cmd.ExecuteNonQuery()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\dbcs.sdf;Password=apress");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="CREATE INDEX idxColumnTwo ON ColumnDefinition (ColumnTwo)";
+cmd.ExecuteNonQuery();
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \dbvb.sdf;Password=apress")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="DROP INDEX ColumnDefinition.idxColumnTwo"
+cmd.ExecuteNonQuery()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\dbcs.sdf;Password=apress");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="DROP INDEX ColumnDefinition.idxColumnTwo";
+cmd.ExecuteNonQuery();
+}
+catch(SqlCeException sqlex)
+{foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+
+
+
+

@@ -1,0 +1,841 @@
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;Password=")cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="INSERT INTO Products ("&_
+"ProductName,"&_
+"SupplierID,"&_
+"CategoryID,"&_
+"UnitPrice,"&_
+"UnitsInStock,"&_
+"Discontinued)"&_
+"VALUES "&_
+"(?,?,?,?,?,?)"
+cmd.Parameters.Add("ProductName","Pocket PC")
+cmd.Parameters.Add("SupplierID",1)
+cmd.Parameters.Add("CategoryID",1)
+cmd.Parameters.Add("UnitPrice",350)
+cmd.Parameters.Add("UnitsInStock",20)
+cmd.Parameters.Add("Discontinued",1)
+cmd.ExecuteNonQuery()
+"Display results of the Insert
+cmd.CommandType =CommandType.TableDirect
+cmd.CommandText ="Products"
+Dim da As New SqlCeDataAdapter(cmd)
+Dim ds As New DataSet
+da.Fill(ds)
+DataGrid1.Enabled =False
+DataGrid1.DataSource =ds.Tables(0)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+DataGrid1.Enabled =True
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="INSERT INTO Products ("+
+"ProductName,"+
+"SupplierID,"+
+"CategoryID,"+
+"UnitPrice,"+
+"UnitsInStock,"+
+"Discontinued)"+
+"VALUES "+
+"(?,?,?,?,?,?)";
+cmd.Parameters.Add("ProductName","Pocket PC");
+cmd.Parameters.Add("SupplierID",1);
+cmd.Parameters.Add("CategoryID",1);
+cmd.Parameters.Add("UnitPrice",350);
+cmd.Parameters.Add("UnitsInStock",20);
+cmd.Parameters.Add("Discontinued",1);
+cmd.ExecuteNonQuery();
+//Display results of the Insert
+cmd.CommandType =CommandType.TableDirect;
+cmd.CommandText ="Products";
+SqlCeDataAdapter da =new SqlCeDataAdapter(cmd);
+DataSet ds =new DataSet();
+da.Fill(ds);
+dataGrid1.Enabled =false;
+dataGrid1.DataSource =ds.Tables [0 ];
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+dataGrid1.Enabled =true;
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;Password=")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT *FROM Shippers"
+Dim da As New SqlCeDataAdapter(cmd)
+Dim ds As New DataSet
+da.Fill(ds)
+DataGrid1.Enabled =False
+DataGrid1.DataSource =ds.Tables(0)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+DataGrid1.Enabled =True
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT *FROM Shippers";
+SqlCeDataAdapter da =new SqlCeDataAdapter(cmd);
+DataSet ds =new DataSet();
+da.Fill(ds);
+dataGrid1.Enabled =false;
+dataGrid1.DataSource =ds.Tables [0 ];
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{dataGrid1.Enabled =true;
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT DISTINCT CategoryID FROM Products"
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT DISTINCT CategoryID FROM Products";
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT P.ProductName AS WidgetName,P.UnitPrice "&_
+"FROM Products P"
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT P.ProductName AS WidgetName,P.UnitPrice "+
+"FROM Products P";
+
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;Password=")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT OrderDate,OD.UnitPrice,OD.Quantity "&_
+"FROM Orders INNER JOIN ""Order Details""OD "&_
+"ON Orders.OrderID =OD.OrderID"
+Dim da As New SqlCeDataAdapter(cmd)
+Dim ds As New DataSet
+da.Fill(ds)
+DataGrid1.Enabled =False
+DataGrid1.DataSource =ds.Tables(0)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+DataGrid1.Enabled =True
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT OrderDate,OD.UnitPrice,OD.Quantity "+
+"FROM Orders INNER JOIN \"Order Details \"OD "+
+"ON Orders.OrderID =OD.OrderID";
+SqlCeDataAdapter da =new SqlCeDataAdapter(cmd);
+DataSet ds =new DataSet();
+da.Fill(ds);
+dataGrid1.Enabled =false;
+dataGrid1.DataSource =ds.Tables [0 ];
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+dataGrid1.Enabled =true;
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,OD.UnitPrice,OD.Quantity "&_
+"FROM Orders LEFT OUTER JOIN ""Order Details""OD "&_
+"ON Orders.OrderID =OD.OrderID"
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,OD.UnitPrice,OD.Quantity "+
+"FROM Orders LEFT OUTER JOIN \"Order Details \"OD "+
+"ON Orders.OrderID =OD.OrderID";
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe'insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,OD.UnitPrice,OD.Quantity "&_
+"FROM Orders RIGHT OUTER JOIN ""Order Details""OD "&_
+"ON Orders.OrderID =OD.OrderID"
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT OrderDate,OD.UnitPrice,OD.Quantity "+
+"FROM Orders RIGHT OUTER JOIN \"Order Details \"OD "+
+"ON Orders.OrderID =OD.OrderID";
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;Password=")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT ProductName,UnitPrice,CategoryID "&_
+"FROM Products "&_
+"WHERE CategoryID =1 "&_
+"AND UnitPrice >200"Dim da As New SqlCeDataAdapter(cmd)
+Dim ds As New DataSet
+da.Fill(ds)
+DataGrid1.Enabled =False
+DataGrid1.DataSource =ds.Tables(0)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+DataGrid1.Enabled =True
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT ProductName,UnitPrice,CategoryID "+
+"FROM Products "+
+"WHERE CategoryID =1 "+
+"AND UnitPrice >200";
+SqlCeDataAdapter da =new SqlCeDataAdapter(cmd);
+DataSet ds =new DataSet();
+da.Fill(ds);
+dataGrid1.Enabled =false;
+dataGrid1.DataSource =ds.Tables [0 ];
+}
+catch(SqlCeException sqlex){
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+dataGrid1.Enabled =true;
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;Password=")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT ProductName,UnitPrice,CategoryID "&_
+"FROM Products "&_
+"WHERE CategoryID =1 "&_
+"UNION "&_
+"SELECT ProductName,UnitPrice,CategoryID "&_
+"FROM Products "&_
+"WHERE CategoryID =2"
+Dim da As New SqlCeDataAdapter(cmd)
+Dim ds As New DataSet
+da.Fill(ds)
+DataGrid1.Enabled =False
+DataGrid1.DataSource =ds.Tables(0)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+DataGrid1.Enabled =True
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT ProductName,UnitPrice,CategoryID "+
+"FROM Products "+
+"WHERE CategoryID =1 "+
+"UNION "+
+"SELECT ProductName,UnitPrice,CategoryID "+
+"FROM Products "+
+"WHERE CategoryID =2";
+SqlCeDataAdapter da =new SqlCeDataAdapter(cmd);
+DataSet ds =new DataSet();
+da.Fill(ds);
+dataGrid1.Enabled =false;
+dataGrid1.DataSource =ds.Tables [0 ];
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+dataGrid1.Enabled =true;
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;Password=")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+'Since Count is a reserved word in SQL,you must enclose it in quotes
+cmd.CommandText ="SELECT City,COUNT(*)AS ""Count"""&_
+"FROM Customers "&_
+"GROUP BY City"
+Dim da As New SqlCeDataAdapter(cmd)
+Dim ds As New DataSet
+da.Fill(ds)
+DataGrid1.Enabled =False
+DataGrid1.DataSource =ds.Tables(0)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+DataGrid1.Enabled =True
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+//Since Count is a reserved word in SQL,you must enclose it in quotes
+cmd.CommandText ="SELECT City,COUNT(*)AS \"Count \""+
+"FROM Customers "+
+"GROUP BY City";
+SqlCeDataAdapter da =new SqlCeDataAdapter(cmd);
+DataSet ds =new DataSet();
+da.Fill(ds);
+dataGrid1.Enabled =false;
+dataGrid1.DataSource =ds.Tables [0 ];
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+dataGrid1.Enabled =true;
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;Password=")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT City,COUNT(*)AS ""Count"""&_
+"FROM Customers "&_
+"GROUP BY City "&_
+"HAVING COUNT(*)>3"
+Dim da As New SqlCeDataAdapter(cmd)
+Dim ds As New DataSet
+da.Fill(ds)
+DataGrid1.Enabled =False
+DataGrid1.DataSource =ds.Tables(0)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+DataGrid1.Enabled =True
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT City,COUNT(*)AS \"Count \""+
+"FROM Customers "+
+"GROUP BY City "+
+"HAVING COUNT(*)>3";
+SqlCeDataAdapter da =new SqlCeDataAdapter(cmd);
+DataSet ds =new DataSet();
+da.Fill(ds);
+dataGrid1.Enabled =false;
+dataGrid1.DataSource =ds.Tables [0 ];
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+dataGrid1.Enabled =true;
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;Password=")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="SELECT CompanyName,City "&_
+"FROM Customers "&_
+"ORDER BY City"Dim da As New SqlCeDataAdapter(cmd)
+Dim ds As New DataSet
+da.Fill(ds)
+DataGrid1.Enabled =False
+DataGrid1.DataSource =ds.Tables(0)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+DataGrid1.Enabled =True
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="SELECT CompanyName,City "+
+"FROM Customers "+
+"ORDER BY City";
+SqlCeDataAdapter da =new SqlCeDataAdapter(cmd);
+DataSet ds =new DataSet();
+da.Fill(ds);
+dataGrid1.Enabled =false;
+dataGrid1.DataSource =ds.Tables [0 ];
+}
+catch(SqlCeException sqlex)
+{foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+dataGrid1.Enabled =true;
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+cmd.CommandText ="SELECT CompanyName,City "&_
+"FROM Customers "&_
+"ORDER BY City DESC"C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+cmd.CommandText ="SELECT CompanyName,City "+
+"FROM Customers "+
+"ORDER BY City DESC";
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;Password=")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="UPDATE Customers "&_
+"SET Region ='UNKNOWN'"&_
+"WHERE Region IS NULL"
+cmd.ExecuteNonQuery()cmd.CommandType =CommandType.TableDirect
+cmd.CommandText ="Customers"
+Dim da As New SqlCeDataAdapter(cmd)
+Dim ds As New DataSet
+da.Fill(ds)
+DataGrid1.Enabled =False
+DataGrid1.DataSource =ds.Tables(0)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+DataGrid1.Enabled =True
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="UPDATE Customers "+
+"SET Region ='UNKNOWN'"+
+"WHERE Region IS NULL";
+cmd.ExecuteNonQuery();
+cmd.CommandType =CommandType.TableDirect;
+cmd.CommandText ="Customers";
+SqlCeDataAdapter da =new SqlCeDataAdapter(cmd);
+DataSet ds =new DataSet();
+da.Fill(ds);dataGrid1.Enabled =false;
+dataGrid1.DataSource =ds.Tables [0 ];
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+dataGrid1.Enabled =true;
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+Visual Basic .NET
+'insert at the top of your class
+Imports System.Data.SqlServerCe
+'insert in a function or click event
+Dim cn As SqlCeConnection
+Try
+cn =New SqlCeConnection("Data Source=\My Documents \NorthwindDemo.sdf;Password=")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand
+cmd.CommandText ="DELETE Products "&_
+"WHERE ProductName ='Pocket PC'"
+cmd.ExecuteNonQuery()
+cmd.CommandType =CommandType.TableDirect
+cmd.CommandText ="Products"
+Dim da As New SqlCeDataAdapter(cmd)
+Dim ds As New DataSet
+da.Fill(ds)
+DataGrid1.Enabled =False
+DataGrid1.DataSource =ds.Tables(0)Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+DataGrid1.Enabled =True
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End Try
+
+
+C#
+//insert at the top of your class
+using System.Data.SqlServerCe;
+//insert in a function or click event
+SqlCeConnection cn =null;
+try
+{
+cn =new SqlCeConnection("Data Source=\\My Documents \\NorthwindDemo.sdf;"+
+"Password=");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+cmd.CommandText ="DELETE Products "+
+"WHERE ProductName ='Pocket PC'";
+cmd.ExecuteNonQuery();
+cmd.CommandType =CommandType.TableDirect;
+cmd.CommandText ="Products";
+SqlCeDataAdapter da =new SqlCeDataAdapter(cmd);
+DataSet ds =new DataSet();
+da.Fill(ds);
+dataGrid1.Enabled =false;
+dataGrid1.DataSource =ds.Tables [0 ];
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message);}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message);
+}
+finally
+{
+dataGrid1.Enabled =true;
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+
+
+

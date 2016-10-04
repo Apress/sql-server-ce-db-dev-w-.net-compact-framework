@@ -1,0 +1,420 @@
+Visual Basic .NET
+Private Sub btnPull_Click(ByVal sender As System.Object,&_
+ByVal e As System.EventArgs)Handles btnPull.Click
+Dim cn As SqlCeConnection
+Dim rda As SqlCeRemoteDataAccess
+Dim sqlEngine As SqlCeEngine
+Try
+btnPull.Enabled =False
+'Create database if it doesn't already exist
+If (Not File.Exists("\My Documents \IntelligenceData.sdf"))Then
+sqlEngine =New SqlCeEngine
+sqlEngine.LocalConnectionString =&_
+"Data Source=\My Documents \IntelligenceData.sdf;"&_
+"Password=apress;"&_
+"Encrypt Database=True"
+sqlEngine.CreateDatabase()
+sqlEngine.Dispose()
+Else
+'Open the connection to the database
+cn =New SqlCeConnection("Data Source=\My Documents"&_
+"\IntelligenceData.sdf;Password=apress")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand()
+'Drop the FieldMemos table
+cmd.CommandText ="DROP TABLE FieldMemos"
+cmd.ExecuteNonQuery()
+'Close the connection
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+End If
+'Instantiate the RDA Object
+rda =New SqlCeRemoteDataAccess'Connection String to the SQL Server.
+Dim remoteConnectString As String ="Provider=SQLOLEDB;"&_
+"Data Source=seawolf;"&_
+"Initial Catalog=IntelligenceData;"&_
+"User Id=sa;"&_
+"Password=apress"
+rda.InternetLogin ="robtiffany"
+rda.InternetPassword ="pinnacle"
+rda.InternetUrl ="https://seawolf/fieldagentrda/sscesa20.dll"
+rda.LocalConnectionString ="Data Source=\My Documents \"&_
+"IntelligenceData.sdf;"&_
+"SSCE:Database Password=apress"
+rda.Pull("FieldMemos","Select *from FieldMemos",remoteConnectString,&_
+RdaTrackOption.TrackingOnWithIndexes,"FieldMemosErrorTable")
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+rda.Dispose()
+btnPull.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnPull_Click(object sender,System.EventArgs e)
+{
+SqlCeConnection cn =null;
+SqlCeRemoteDataAccess rda =null;
+SqlCeEngine sqlEngine =null;
+try
+{
+btnPull.Enabled =false;//Create database if it doesn't already exist
+if (!File.Exists("\\My Documents \\IntelligenceData.sdf"))
+{
+sqlEngine =new SqlCeEngine();
+sqlEngine.LocalConnectionString ="Data Source=\\My Documents \\"+
+"IntelligenceData.sdf;"+
+"Password=apress;"+
+"Encrypt Database=True";
+sqlEngine.CreateDatabase();
+sqlEngine.Dispose();
+}
+else
+{
+//Open the connection to the database
+cn =new SqlCeConnection("Data Source=\\My Documents \\"+
+"IntelligenceData.sdf;Password=apress");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+//Drop the FieldMemos table
+cmd.CommandText ="DROP TABLE FieldMemos";
+cmd.ExecuteNonQuery();
+//Close the connection
+if (cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+}
+//Instantiate the RDA Object
+rda =new SqlCeRemoteDataAccess();
+//Connection String to the SQL Server.
+string remoteConnectString ="Provider=SQLOLEDB;"+
+"Data Source=seawolf;"+
+"Initial Catalog=IntelligenceData;"+
+"User Id=sa;"+
+"Password=apress";
+rda.InternetLogin ="robtiffany";
+rda.InternetPassword ="pinnacle";
+rda.InternetUrl ="https://seawolf/fieldagentrda/sscesa20.dll";
+rda.LocalConnectionString ="Data Source=\\My Documents \\"+"IntelligenceData.sdf;"+
+"SSCE:Database Password=apress";
+rda.Pull("FieldMemos",
+"Select *from FieldMemos",
+remoteConnectString,
+RdaTrackOption.TrackingOnWithIndexes,
+"FieldMemosErrorTable");
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message,"Error");
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message,"Error");
+}
+finally
+{
+rda.Dispose();
+btnPull.Enabled =true;
+}
+}
+
+
+Visual Basic .NET
+Private Sub btnAddMemo_Click(ByVal sender As System.Object,&_
+ByVal e As System.EventArgs)Handles btnAddMemo.Click
+Dim cn As SqlCeConnectionTry
+btnAddMemo.Enabled =False
+cn =New SqlCeConnection("Data Source=\My
+Documents \IntelligenceData.sdf;Password=apress")
+cn.Open()
+Dim cmd As SqlCeCommand =cn.CreateCommand()
+'Insert Memo data
+cmd.CommandText ="INSERT INTO FieldMemos ("&_
+"MemoTo,"&_
+"MemoFrom,"&_
+"MemoDateTime,"&_
+"MemoCity,"&_
+"MemoState,"&_
+"MemoSubject,"&_
+"MemoPriority,"&_
+"MemoBody)"&_
+"VALUES "&_
+"(?,?,?,?,?,?,?,?)"
+cmd.Parameters.Add("@MemoTo","Office of the Director")
+cmd.Parameters.Add("@MemoFrom","Agent 99")
+cmd.Parameters.Add("@MemoDateTime",System.DateTime.Now)
+cmd.Parameters.Add("@MemoCity","Houston")
+cmd.Parameters.Add("@MemoState","TX")
+cmd.Parameters.Add("@MemoSubject","Suspicious Activity 2")
+cmd.Parameters.Add("@MemoPriority",1)
+cmd.Parameters.Add("@MemoBody","Observed a suspicious meeting")
+cmd.Prepare()
+cmd.ExecuteNonQuery()
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+If cn.State <>ConnectionState.Closed Then
+cn.Close()
+End If
+btnAddMemo.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnAddMemo_Click(object sender,System.EventArgs e)
+{
+SqlCeConnection cn =null;
+try
+{
+btnAddMemo.Enabled =false;
+cn =new SqlCeConnection("Data Source=\\My Documents \\"+
+"IntelligenceData.sdf;Password=apress");
+cn.Open();
+SqlCeCommand cmd =cn.CreateCommand();
+//Insert Memo data
+cmd.CommandText ="INSERT INTO FieldMemos ("+
+"MemoTo,"+
+"MemoFrom,"+
+"MemoDateTime,"+
+"MemoCity,"+
+"MemoState,"+
+"MemoSubject,"+
+"MemoPriority,"+
+"MemoBody)"+
+"VALUES "+
+"(?,?,?,?,?,?,?,?)";
+cmd.Parameters.Add("@MemoTo","Office of the Director");
+cmd.Parameters.Add("@MemoFrom","Agent 86");
+cmd.Parameters.Add("@MemoDateTime",System.DateTime.Now);
+cmd.Parameters.Add("@MemoCity","Houston");
+cmd.Parameters.Add("@MemoState","TX");
+cmd.Parameters.Add("@MemoSubject","Suspicious Activity");
+cmd.Parameters.Add("@MemoPriority",1);
+cmd.Parameters.Add("@MemoBody","Observed a suspicious meeting");
+cmd.Prepare();
+cmd.ExecuteNonQuery();
+}
+catch (SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message,"Error");
+}}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message,"Error");
+}
+finally
+{
+if(cn.State !=ConnectionState.Closed)
+{
+cn.Close();
+}
+btnAddMemo.Enabled =true;
+}
+}
+
+
+Visual Basic .NET
+Private Sub btnPush_Click(ByVal sender As System.Object,
+ByVal e As System.EventArgs)Handles btnPush.Click
+Dim rda As SqlCeRemoteDataAccess
+Try
+btnPush.Enabled =False
+'Instantiate the RDA Object
+rda =New SqlCeRemoteDataAccess
+'Connection String to the SQL Server.
+Dim remoteConnectString As String ="Provider=SQLOLEDB;"&_
+"Data Source=seawolf;"&_
+"Initial Catalog=IntelligenceData;"&_
+"User Id=sa;"&_
+"Password=apress"
+rda.InternetLogin ="robtiffany"
+rda.InternetPassword ="pinnacle"
+rda.InternetUrl ="https://seawolf/fieldagentrda/sscesa20.dll"
+rda.LocalConnectionString =&_
+"Data Source=\My Documents \IntelligenceData.sdf;"&_
+"SSCE:Database Password=apress"
+rda.Push("FieldMemos",remoteConnectString,RdaBatchOption.BatchingOn)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As Exception
+MessageBox.Show(ex.Message)
+Finally
+rda.Dispose()
+btnPush.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnPush_Click(object sender,System.EventArgs e)
+{
+SqlCeRemoteDataAccess rda =null;
+try
+{
+btnPush.Enabled =false;
+//Instantiate the RDA Object
+rda =new SqlCeRemoteDataAccess();
+//Connection String to the SQL Server.
+string remoteConnectString ="Provider=SQLOLEDB;"+
+"Data Source=seawolf;"+
+"Initial Catalog=IntelligenceData;"+
+"User Id=sa;"+
+"Password=apress";
+rda.InternetLogin ="robtiffany";
+rda.InternetPassword ="pinnacle";
+rda.InternetUrl ="https://seawolf/fieldagentrda/sscesa20.dll";
+rda.LocalConnectionString ="Data Source=\\My Documents \\"+
+"IntelligenceData.sdf;"+
+"SSCE:Database Password=apress";
+rda.Push("FieldMemos",remoteConnectString,RdaBatchOption.BatchingOn);
+}
+catch(SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message,"Error");
+}
+}
+catch(Exception ex)
+{
+MessageBox.Show(ex.Message,"Error");
+}
+finally{
+rda.Dispose();
+btnPush.Enabled =true;
+}
+}
+
+
+Visual Basic .NET
+Private Sub btnSubmitSQL_Click(ByVal sender As System.Object,&_
+ByVal e As System.EventArgs)Handles submitSQL.Click
+Dim rda As SqlCeRemoteDataAccess
+Try
+btnSubmitSQL.Enabled =False'Instantiate the RDA Object
+rda =New SqlCeRemoteDataAccess
+'Connection String to the SQL Server.
+Dim remoteConnectString As String ="Provider=SQLOLEDB;"&_
+"Data Source=seawolf;"&_
+"Initial Catalog=IntelligenceData;"&_
+"User Id=sa;"&_
+"Password=apress"
+rda.InternetLogin ="robtiffany"
+rda.InternetPassword ="pinnacle"
+rda.InternetUrl ="https://seawolf/fieldagentrda/sscesa20.dll"
+rda.LocalConnectionString ="Data Source=\My Documents \"&_
+"IntelligenceData.sdf;"&_
+"SSCE:Database Password=apress"
+Dim remoteSQL As String ="INSERT INTO FieldMemos ("&_
+"MemoTo,"&_
+"MemoFrom,"&_
+"MemoDateTime,"&_
+"MemoCity,"&_
+"MemoState,"&_
+"MemoSubject,"&_
+"MemoPriority,"&_
+"MemoBody)"&_
+"VALUES "&_
+"('Office of the Director',"&_
+"'Agent 99',"&_
+"'"+System.DateTime.Now +"',"&_
+"'Houston',"&_
+"'TX',"&_
+"'Suspicious Activity 3',"&_
+"'1',"&_
+"'Observed a suspicious meeting')"
+rda.SubmitSql(remoteSQL,remoteConnectString)
+Catch sqlex As SqlCeException
+Dim sqlError As SqlCeError
+For Each sqlError In sqlex.Errors
+MessageBox.Show(sqlError.Message)
+Next
+Catch ex As ExceptionMessageBox.Show(ex.Message)
+Finally
+rda.Dispose()
+btnSubmitSQL.Enabled =True
+End Try
+End Sub
+
+
+C#
+private void btnSubmitSQL_Click(object sender,System.EventArgs e)
+{
+SqlCeRemoteDataAccess rda =null;
+try
+{
+btnSubmitSQL.Enabled =false;
+//Instantiate the RDA Object
+rda =new SqlCeRemoteDataAccess();
+//Connection String to the SQL Server.
+string remoteConnectString ="Provider=SQLOLEDB;"+
+"Data Source=seawolf;"+
+"Initial Catalog=IntelligenceData;"+
+"User Id=sa;"+
+"Password=apress";
+rda.InternetLogin ="robtiffany";
+rda.InternetPassword ="pinnacle";
+rda.InternetUrl ="https://seawolf/fieldagentrda/sscesa20.dll";
+rda.LocalConnectionString ="Data Source=\\My Documents \\"+
+"IntelligenceData.sdf;"+
+"SSCE:Database Password=apress";
+string remoteSQL ="INSERT INTO FieldMemos ("+
+"MemoTo,"+
+"MemoFrom,"+
+"MemoDateTime,"+
+"MemoCity,"+
+"MemoState,"+
+"MemoSubject,"+
+"MemoPriority,"+
+"MemoBody)"+"VALUES "+
+"('Office of the Director',"+
+"'Agent 99',"+
+"'"+System.DateTime.Now +"',"+
+"'Houston',"+
+"'TX',"+
+"'More Suspicious Activity',"+
+"'1',"+
+"'Observed another suspicious meeting')";
+rda.SubmitSql(remoteSQL,remoteConnectString);
+}
+catch (SqlCeException sqlex)
+{
+foreach(SqlCeError sqlError in sqlex.Errors)
+{
+MessageBox.Show(sqlError.Message,"Error");
+}
+}
+catch (Exception ex)
+{
+MessageBox.Show(ex.Message,"Error");
+}
+finally
+{
+rda.Dispose();
+btnSubmitSQL.Enabled =true;
+}
+}
+
